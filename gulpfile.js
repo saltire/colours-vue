@@ -29,7 +29,8 @@ gulp.task('libs', () => {
     gulp.src(
         [
             // Using non-minified Vue libs for debugging purposes.
-            'node_modules/vue/dist/vue.js'
+            'node_modules/vue/dist/vue.js',
+            'node_modules/vue-resource/dist/vue-resource.min.js'
         ])
         .pipe(gulp.dest('dist'));
 });
