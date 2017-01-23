@@ -167,11 +167,7 @@ const app = new Vue({
     data() {
         return {
             background: new Color('white', 255, 255, 255),
-            colors: [
-                new Color('red', 255, 0, 0),
-                new Color('green', 0, 255, 0),
-                new Color('blue', 0, 0, 255),
-            ]
+            colors: []
         };
     },
     computed: {
@@ -180,6 +176,16 @@ const app = new Vue({
         }
     },
     methods: {
+        load(filename) {
+            this.$http.get('/colours.json').then(
+                resp => {
+                    this.colors = resp.body
+                        .map(color => new Color(color.name, color.r, color.g, color.b));
+                },
+                resp => {
+                    console.log('error', resp);
+                });
+        },
         updateBackground(color) {
             this.background = color;
         },
@@ -204,3 +210,5 @@ const app = new Vue({
         '</main>'
     )
 });
+
+app.load('/colours.json');
