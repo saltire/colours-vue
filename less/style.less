@@ -1,14 +1,26 @@
-@import '../node_modules/bootstrap/less/bootstrap.less';
+@wide: 1150px;
+@narrow: 950px;
 
-@grid-columns: 18;
-@grid-gutter-width: 10px;
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  padding-top: 50px;
   background: #f8f8f8;
   color: #333;
   font-family: sans-serif;
+
+  > header {
+    border-bottom: 1px solid #e7e7e7;
+  }
+}
+
+h1 {
+  color: #777;
+  text-align: center;
+  line-height: 40px;
+  font-size: 18px;
 }
 
 main {
@@ -23,106 +35,160 @@ main {
       color: #333;
     }
   }
-}
 
-header {
-  .container;
-
-  div {
-    line-height: 40px;
-    font-size: 20px;
+  header {
+    display: flex;
+    width: @wide;
+    margin: auto;
   }
 
-  .name {
-    .make-md-column-offset(2);
+  ul {
+    width: @wide;
+    margin: auto;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      line-height: 34px;
+
+      div, button, input {
+        height: 40px;
+        border: 0;
+        border-radius: 3px;
+        line-height: 40px;
+        font-size: 20px;
+      }
+
+      div {
+        button, input {
+          width: 100%;
+        }
+
+        input {
+          padding: 5px 10px;
+          background: rgba(255, 255, 255, .7);
+          box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+          color: #666;
+
+          &:focus {
+            background: rgba(255, 255, 255, .9);
+          }
+        }
+
+        a {
+          margin: 0 10px;
+          color: inherit;
+
+          &:hover {
+            color: inherit;
+            text-decoration: none;
+          }
+
+          &.handle {
+            cursor: ns-resize;
+          }
+        }
+
+        &.numbers {
+          display: flex;
+
+          div {
+            margin: 0;
+            flex-basis: auto;
+            flex-grow: 1;
+
+            &:first-child {
+              padding-left: 0;
+            }
+
+            &:last-child {
+              padding-right: 0;
+            }
+
+            input {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  header h1,
+  ul li div {
+    flex-basis: 1px;
+    margin: 3px 0;
+    padding: 0 3px;
+
+    &:first-child {
+      text-align: right;
+    }
+
+    &:last-child {
+      text-align: left;
+    }
+
+    &.control {
+      flex-grow: 1;
+    }
+
+    &.color {
+      flex-grow: 1;
+    }
+
+    &.name {
+      flex-grow: 4;
+    }
+
+    &.hex {
+      flex-grow: 2;
+    }
+
+    &.numbers {
+      flex-grow: 4;
+    }
   }
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    .container;
-    margin: 5px auto;
-    line-height: 34px;
-
-    div, button, input {
-      width: 100%;
-      height: 40px;
-      border: 0;
-      border-radius: 3px;
-      line-height: 40px;
-      font-size: 20px;
-    }
-
-    input {
-      padding: 5px 10px;
-      background: rgba(255, 255, 255, .7);
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
-      color: #666;
-
-      &:focus {
-        background: rgba(255, 255, 255, .9);
-      }
-    }
-
-    .control {
-      &.left {
-        text-align: right;
-      }
-
-      &.right {
-        text-align: left;
-      }
-    }
-
-    .number {
-      input {
-        text-align: center;
-      }
-    }
-
-    a {
-      margin: 0 10px;
-      color: inherit;
-
-      &:hover {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      &.handle {
-        cursor: ns-resize;
-      }
+@media only screen and (max-width: @wide) {
+  main {
+    header, ul {
+      width: @narrow;
     }
   }
 }
 
-.control {
-  .make-xs-column(18);
-  .make-md-column(1);
-}
-.color {
-  .make-xs-column(18);
-  .make-md-column(1);
-}
-.name {
-  .make-xs-column(9);
-  .make-md-column(4);
-}
-.hex {
-  .make-xs-column(9);
-  .make-md-column(2);
-}
-.numbers {
-  .make-xs-column(18);
-  .make-sm-column(9);
-  .make-md-column(4);
-  .make-row(@gutter: @grid-gutter-width);
-}
-.number {
-  .make-xs-column(6);
-  .make-md-column(6);
+@media only screen and (max-width: @narrow) {
+  main {
+    header {
+      display: none;
+    }
+
+    ul {
+      width: auto;
+
+      li {
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+
+        div {
+          flex-basis: 100%;
+
+          &.control {
+            flex-basis: 50%;
+            order: -2;
+          }
+
+          &.color {
+            order: -1;
+
+            &:nth-child(2) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }

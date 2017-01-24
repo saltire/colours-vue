@@ -142,7 +142,7 @@ Vue.component('color-row', {
     },
     template: (
         '<li>' +
-            '<div class="control left"><a class="handle" title="Move up/down">░</a></div>' +
+            '<div class="control"><a class="handle" title="Move up/down">░</a></div>' +
             '<div class="color"><button :title="`Set background to ${color.name}`" v-on:click="onClickColor" :style="{ background: color.format() }"></button></div>' +
             '<div class="name"><input type="text" maxlength="50" v-model.trim="color.name"></div>' +
             '<div class="hex"><input type="text" maxlength="7" v-model.lazy="hex"></div>' +
@@ -157,7 +157,7 @@ Vue.component('color-row', {
                 '<div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.v" data-range="100" v-on:change="setFromHSV"></div>' +
             '</div>' +
             '<div class="color"><button :title="`Set background to ${color.name}`" v-on:click="onClickColor" :style="{ background: color.format() }"></button></div>' +
-            '<div class="control right"><a class="delete" title="Remove" v-on:click="onClickRemove">✕</a></div>' +
+            '<div class="control"><a class="delete" title="Remove" v-on:click="onClickRemove">✕</a></div>' +
         '</li>'
     )
 });
@@ -199,10 +199,14 @@ const app = new Vue({
     template: (
         '<main :class="backClass" :style="{ background: background.format() }">' +
             '<header>' +
-                '<div class="name">Name</div>' +
-                '<div class="hex">Hex</div>' +
-                '<div class="numbers">RGB</div>' +
-                '<div class="numbers">HSV</div>' +
+                '<h1 class="control"></h1>' +
+                '<h1 class="control"></h1>' +
+                '<h1 class="name">Name</h1>' +
+                '<h1 class="hex">Hex</h1>' +
+                '<h1 class="numbers">RGB</h1>' +
+                '<h1 class="numbers">HSV</h1>' +
+                '<h1 class="control"></h1>' +
+                '<h1 class="control"></h1>' +
             '</header>' +
             '<ul>' +
                 '<color-row v-for="color in colors" :key="`${color.name}-${color.hex()}`" :initColor="color" v-on:updateBackground="updateBackground" v-on:updateColor="updateColor" v-on:remove="remove"></color-row>' +
