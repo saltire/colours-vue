@@ -1,15 +1,21 @@
 'use strict';
 
+const babelify = require('babelify');
+const browserify = require('browserify');
 const gulp = require('gulp');
-const babel = require('gulp-babel');
 const connect = require('gulp-connect');
 const less = require('gulp-less');
+const source = require('vinyl-source-stream');
+const vueify = require('vueify');
 
 
-gulp.task('babel', () => {
-    gulp.src('js/*.js')
-        .pipe(babel({presets: ['es2015']}))
-        .on('error', (err) => console.log('Error parsing with Babel:', err.message))
+gulp.task('browserify', () => {
+    browserify('js/main.js')
+        .transform(vueify)
+        .transform(babelify)
+        .bundle()
+        .on('error', (err) => console.log('Error parsing with Browserify:', err.message))
+        .pipe(source('script.js'))
         .pipe(gulp.dest('dist'));
 });
 
@@ -25,16 +31,6 @@ gulp.task('src', () => {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('libs', () => {
-    gulp.src(
-        [
-            // Using non-minified Vue libs for debugging purposes.
-            'node_modules/vue/dist/vue.js',
-            'node_modules/vue-resource/dist/vue-resource.min.js'
-        ])
-        .pipe(gulp.dest('dist'));
-});
-
 gulp.task('serve', () => {
     connect.server({
         root: 'dist',
@@ -43,10 +39,10 @@ gulp.task('serve', () => {
 });
 
 gulp.task('watch', () => {
-    gulp.watch('js/*.js', ['babel']);
+    gulp.watch(['js/*.js', 'vue/*.vue'], ['browserify']);
     gulp.watch('less/*.less', ['less']);
     gulp.watch('src/*', ['src']);
 });
 
-gulp.task('build', ['babel', 'less', 'src', 'libs']);
+gulp.task('build', ['browserify', 'less', 'src']);
 gulp.task('default', ['build', 'serve', 'watch']);
