@@ -1,21 +1,21 @@
 <template>
     <li>
-        <div class="control"><a class="handle" title="Move up/down">░</a></div>
-        <div class="color"><button :title="`Set background to ${color.name}`" v-on:click="onClickColor" :style="{ background: color.format() }"></button></div>
-        <div class="name"><input type="text" maxlength="50" v-model.trim="color.name"></div>
-        <div class="hex"><input type="text" maxlength="7" v-model.lazy="hex"></div>
-        <div class="numbers">
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.r" data-range="255" v-on:change="setFromRGB"></div>
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.g" data-range="255" v-on:change="setFromRGB"></div>
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.b" data-range="255" v-on:change="setFromRGB"></div>
+        <div class='control'><a class='handle' title='Move up/down'>░</a></div>
+        <div class='color'><button :title='`Set background to ${color.name}`' v-on:click='onClickColor' :style='{ background: color.format() }'></button></div>
+        <div class='name'><input type='text' maxlength='50' v-model.trim='color.name'></div>
+        <div class='hex'><input type='text' maxlength='7' v-model.lazy='hex'></div>
+        <div class='numbers'>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.r' data-range='255' v-on:change='setFromRGB'></div>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.g' data-range='255' v-on:change='setFromRGB'></div>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.b' data-range='255' v-on:change='setFromRGB'></div>
         </div>
-        <div class="numbers">
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.h" data-range="359" v-on:change="setFromHSV"></div>
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.s" data-range="100" v-on:change="setFromHSV"></div>
-            <div class="number"><input type="text" maxlength="3" v-model.lazy.number="color.v" data-range="100" v-on:change="setFromHSV"></div>
+        <div class='numbers'>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.h' data-range='359' v-on:change='setFromHSV'></div>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.s' data-range='100' v-on:change='setFromHSV'></div>
+            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.v' data-range='100' v-on:change='setFromHSV'></div>
         </div>
-        <div class="color"><button :title="`Set background to ${color.name}`" v-on:click="onClickColor" :style="{ background: color.format() }"></button></div>
-        <div class="control"><a class="delete" title="Remove" v-on:click="onClickRemove">✕</a></div>
+        <div class='color'><button :title='`Set background to ${color.name}`' v-on:click='onClickColor' :style='{ background: color.format() }'></button></div>
+        <div class='control'><a class='delete' title='Remove' v-on:click='onClickRemove'>✕</a></div>
     </li>
 </template>
 
@@ -23,7 +23,6 @@
 import Color from '../js/color';
 
 export default {
-    name: 'color-row',
     props: ['initColor'],
     data() {
         return {
@@ -67,6 +66,8 @@ export default {
                         this.color.g = parseInt(hex.slice(3, 5), 16);
                         this.color.b = parseInt(hex.slice(5, 7), 16);
                     }
+
+                    this.color.calcHSV();
 
                     this.$emit('updateColor', this.initColor, this.color);
                 }
