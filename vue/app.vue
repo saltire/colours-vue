@@ -1,18 +1,18 @@
 <template>
-    <main :class="backClass" :style="{ background: background.format() }">
+    <main :class='backClass' :style='{ background: background.format() }'>
         <header>
-            <h1 class="control"></h1>
-            <h1 class="control"></h1>
-            <h1 class="name">Name</h1>
-            <h1 class="hex">Hex</h1>
-            <h1 class="numbers">RGB</h1>
-            <h1 class="numbers">HSV</h1>
-            <h1 class="control"></h1>
-            <h1 class="control"></h1>
+            <h1 class='control'></h1>
+            <h1 class='control'></h1>
+            <h1 class='name'>Name</h1>
+            <h1 class='hex'>Hex</h1>
+            <h1 class='numbers'>RGB</h1>
+            <h1 class='numbers'>HSV</h1>
+            <h1 class='control'></h1>
+            <h1 class='control'></h1>
         </header>
-        <ul v-sortable="{handle: '.handle'}">
-            <color-row v-for="color in colors" :key="`${color.name}-${color.hex()}`" :initColor="color" v-on:updateBackground="updateBackground" v-on:updateColor="updateColor" v-on:remove="remove"></color-row>
-        </ul> +
+        <ul v-sortable='{handle: ".handle", onSort}'>
+            <color-row v-for='color in colors' :key='`${color.name}-${color.hex()}`' :initColor='color' v-on:updateBackground='updateBackground' v-on:updateColor='updateColor' v-on:remove='remove'></color-row>
+        </ul>
     </main>
 </template>
 
@@ -52,6 +52,9 @@ export default {
         },
         remove(color) {
             this.colors.splice(this.colors.indexOf(color), 1);
+        },
+        onSort(e) {
+            this.colors.splice(e.newIndex, 0, ...this.colors.splice(e.oldIndex, 1));
         }
     }
 };
