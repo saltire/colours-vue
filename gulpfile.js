@@ -5,6 +5,7 @@ const browserify = require('browserify');
 const gulp = require('gulp');
 const connect = require('gulp-connect');
 const less = require('gulp-less');
+const run = require('gulp-run');
 const source = require('vinyl-source-stream');
 const vueify = require('vueify');
 
@@ -44,5 +45,10 @@ gulp.task('watch', () => {
     gulp.watch('src/*', ['src']);
 });
 
+gulp.task('gh-pages', () => {
+    run('git subtree push --prefix dist origin gh-pages').exec();
+});
+
 gulp.task('build', ['browserify', 'less', 'src']);
+gulp.task('publish', ['build', 'gh-pages']);
 gulp.task('default', ['build', 'serve', 'watch']);
