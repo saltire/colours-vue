@@ -6,6 +6,8 @@ const gulp = require('gulp');
 const connect = require('gulp-connect');
 const less = require('gulp-less');
 const run = require('gulp-run');
+const streamify = require('gulp-streamify');
+const uglify = require('gulp-uglify');
 const source = require('vinyl-source-stream');
 const vueify = require('vueify');
 
@@ -17,6 +19,7 @@ gulp.task('browserify', () => {
         .bundle()
         .on('error', (err) => console.log('Error parsing with Browserify:', err.message))
         .pipe(source('script.js'))
+        .pipe(streamify(uglify()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -27,8 +30,8 @@ gulp.task('less', () => {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('src', () => {
-    gulp.src('src/*')
+gulp.task('static', () => {
+    gulp.src('static/*')
         .pipe(gulp.dest('dist'));
 });
 
@@ -49,6 +52,6 @@ gulp.task('gh-pages', () => {
     run('git subtree push --prefix dist origin gh-pages').exec();
 });
 
-gulp.task('build', ['browserify', 'less', 'src']);
+gulp.task('build', ['browserify', 'less', 'static']);
 gulp.task('publish', ['build', 'gh-pages']);
 gulp.task('default', ['build', 'serve', 'watch']);
