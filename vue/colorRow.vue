@@ -26,7 +26,9 @@ export default {
     props: ['initColor'],
     data() {
         return {
-            color: new Color(this.initColor.name, this.initColor.r, this.initColor.g, this.initColor.b)
+            color: new Color(this.initColor.name,
+                this.initColor.r, this.initColor.g, this.initColor.b,
+                this.initColor.h, this.initColor.s, this.initColor.v)
         };
     },
     methods: {
@@ -38,10 +40,12 @@ export default {
         },
         setFromRGB() {
             this.color.calcHSV();
+            console.log('set from rgb', this.color);
             this.$emit('updateColor', this.initColor, this.color);
         },
         setFromHSV() {
             this.color.calcRGB();
+            console.log('set from hsv', this.color);
             this.$emit('updateColor', this.initColor, this.color);
         }
     },
@@ -69,6 +73,7 @@ export default {
 
                     this.color.calcHSV();
 
+                    console.log('set from hex', this.color);
                     this.$emit('updateColor', this.initColor, this.color);
                 }
                 else {

@@ -11,8 +11,8 @@ const vueify = require('vueify');
 
 gulp.task('browserify', () => {
     browserify('js/main.js')
-        .transform(vueify)
         .transform(babelify)
+        .transform(vueify)
         .bundle()
         .on('error', (err) => console.log('Error parsing with Browserify:', err.message))
         .pipe(source('script.js'))

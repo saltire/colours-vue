@@ -1,12 +1,16 @@
 export default class Color {
-    constructor(name, r, g, b) {
+    constructor(name, r, g, b, h, s, v) {
         this.name = name;
 
-        this.r = Number(r) || 0;
-        this.g = Number(g) || 0;
-        this.b = Number(b) || 0;
-
-        this.calcHSV();
+        if (r !== undefined && g !== undefined && b !== undefined) {
+            this.setRGB(r, g, b);
+        }
+        else if (h !== undefined && s !== undefined && v !== undefined) {
+            this.setHSV(r, g, b);
+        }
+        else {
+            this.setRGB();
+        }
     }
 
     format() {
@@ -17,6 +21,20 @@ export default class Color {
         const num = this.r * 0x10000 + this.g * 0x100 + this.b;
         const str = num.toString(16);
         return '#' + '000000'.slice(str.length) + str;
+    }
+
+    setRGB(r, g, b) {
+        this.r = Number(r) || 0;
+        this.g = Number(g) || 0;
+        this.b = Number(b) || 0;
+        this.calcHSV();
+    }
+
+    setHSV(h, s, v) {
+        this.h = Number(h) || 0;
+        this.s = Number(s) || 0;
+        this.v = Number(v) || 0;
+        this.calcRGB();
     }
 
     calcRGB() {
