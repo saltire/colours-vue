@@ -13,6 +13,10 @@ export default class Color {
         }
     }
 
+    clone() {
+        return new Color(this.name, this.r, this.g, this.b, this.h, this.s, this.v);
+    }
+
     format() {
         return `rgb(${this.r}, ${this.g}, ${this.b})`;
     }
@@ -23,18 +27,56 @@ export default class Color {
         return '#' + '000000'.slice(str.length) + str;
     }
 
-    setRGB(r, g, b) {
-        this.r = Number(r) || 0;
-        this.g = Number(g) || 0;
-        this.b = Number(b) || 0;
+    setHex(str) {
+        if (!/^#?([0-9a-f]{3}){1,2}$/i.test(str)) {
+            throw new Error('Invalid hex code.');
+        }
+
+        const hex = '#' + str.replace('#', '');
+
+        if (hex.length === 4) {
+            return this.setRGB(
+                parseInt(hex.slice(1, 2) + hex.slice(1, 2), 16),
+                parseInt(hex.slice(2, 3) + hex.slice(2, 3), 16),
+                parseInt(hex.slice(3, 4) + hex.slice(3, 4), 16));
+        }
+        else {
+            return this.setRGB(
+                parseInt(hex.slice(1, 3), 16),
+                parseInt(hex.slice(3, 5), 16),
+                parseInt(hex.slice(5, 7), 16));
+        }
+    }
+
+    set r(r) {
+        this.r = Math.max(0, Math.min(255, Number(r) || 0));
         this.calcHSV();
     }
 
+    set g(g) {
+        this.g = Math.max(0, Math.min(255, Number(g) || 0));
+        this.calcHSV();
+    }
+
+    set b(b) {
+        this.b = Math.max(0, Math.min(255, Number(b) || 0));
+        this.calcHSV();
+    }
+
+    setRGB(r, g, b) {
+        this.r = Math.max(0, Math.min(255, Number(r) || 0));
+        this.g = Math.max(0, Math.min(255, Number(g) || 0));
+        this.b = Math.max(0, Math.min(255, Number(b) || 0));
+        this.calcHSV();
+        return this;
+    }
+
     setHSV(h, s, v) {
-        this.h = Number(h) || 0;
-        this.s = Number(s) || 0;
-        this.v = Number(v) || 0;
+        this.h = (Number(h) || 0) % 360;
+        this.s = Math.max(0, Math.min(100, Number(s) || 0));
+        this.v = Math.max(0, Math.min(100, Number(v) || 0));
         this.calcRGB();
+        return this;
     }
 
     calcRGB() {
@@ -77,6 +119,8 @@ export default class Color {
         this.r = Math.floor(rgb[0] * 255);
         this.g = Math.floor(rgb[1] * 255);
         this.b = Math.floor(rgb[2] * 255);
+
+        return this;
     }
 
     calcHSV() {
@@ -101,5 +145,7 @@ export default class Color {
             this.s = Math.floor(chr / max * 100);
             this.v = Math.floor(max * 100);
         }
+
+        return this;
     }
 }

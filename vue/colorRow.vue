@@ -1,21 +1,21 @@
 <template>
     <li>
         <div class='control'><a class='handle' title='Move up/down'>░</a></div>
-        <div class='color'><button :title='`Set background to ${color.name}`' v-on:click='onClickColor' :style='{ background: color.format() }'></button></div>
+        <div class='color'><button :title='`Set background to ${color.name}`' @click='onClickColor' :style='{ background: color.format() }'></button></div>
         <div class='name'><input type='text' maxlength='50' v-model.trim='color.name'></div>
-        <div class='hex'><input type='text' maxlength='7' v-model.lazy='hex'></div>
+        <div class='hex'><input type='text' maxlength='7' :value='hex' @change='setFromHex'></div>
         <div class='numbers'>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.r' data-range='255' v-on:change='setFromRGB'></div>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.g' data-range='255' v-on:change='setFromRGB'></div>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.b' data-range='255' v-on:change='setFromRGB'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.r' data-range='255' @change='setFromRGB'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.g' data-range='255' @change='setFromRGB'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.b' data-range='255' @change='setFromRGB'></div>
         </div>
         <div class='numbers'>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.h' data-range='359' v-on:change='setFromHSV'></div>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.s' data-range='100' v-on:change='setFromHSV'></div>
-            <div class='number'><input type='text' maxlength='3' v-model.lazy.number='color.v' data-range='100' v-on:change='setFromHSV'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.h' data-range='359' @change='setFromHSV'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.s' data-range='100' @change='setFromHSV'></div>
+            <div class='number'><input type='text' maxlength='3' :value='color.v' data-range='100' @change='setFromHSV'></div>
         </div>
-        <div class='color'><button :title='`Set background to ${color.name}`' v-on:click='onClickColor' :style='{ background: color.format() }'></button></div>
-        <div class='control'><a class='delete' title='Remove' v-on:click='onClickRemove'>✕</a></div>
+        <div class='color'><button :title='`Set background to ${color.name}`' @click='onClickColor' :style='{ background: color.format() }'></button></div>
+        <div class='control'><a class='delete' title='Remove' @click='onClickRemove'>✕</a></div>
     </li>
 </template>
 
@@ -23,12 +23,15 @@
 import Color from '../js/color';
 
 export default {
-    props: ['initColor'],
+    props: ['color'],
     data() {
         return {
-            color: new Color(this.initColor.name,
-                this.initColor.r, this.initColor.g, this.initColor.b,
-                this.initColor.h, this.initColor.s, this.initColor.v)
+            r: color.r,
+            g: color.g,
+            b: color.b,
+            h: color.h,
+            s: color.s,
+            v: color.v
         };
     },
     methods: {
@@ -41,46 +44,27 @@ export default {
         setFromRGB() {
             this.color.calcHSV();
             console.log('set from rgb', this.color);
-            this.$emit('updateColor', this.initColor, this.color);
+            // this.$emit('updateColor', this.initColor, new Color(this.initColor.name,
+            //     null, null, null, this.color.));
         },
         setFromHSV() {
             this.color.calcRGB();
             console.log('set from hsv', this.color);
-            this.$emit('updateColor', this.initColor, this.color);
+            // this.$emit('updateColor', this.initColor,
+            //     new Color(this.color.name, null, null, null, ));
+        },
+        setFromHex(e) {
+            try {
+                this.color.setHex(e.target.value);
+            }
+            catch (err) {
+                e.target.value = this.hex;
+            }
         }
     },
     computed: {
-        hex: {
-            get() {
-                return this.color.hex();
-            },
-            set(str) {
-                // Validate hex format.
-                if (/^#?([0-9a-f]{3}){1,2}$/i.test(str)) {
-                    const hex = '#' + str.replace('#', '');
-
-                    // Calculate RGB and update color.
-                    if (hex.length === 4) {
-                        this.color.r = parseInt(hex.slice(1, 2) + hex.slice(1, 2), 16);
-                        this.color.g = parseInt(hex.slice(2, 3) + hex.slice(2, 3), 16);
-                        this.color.b = parseInt(hex.slice(3, 4) + hex.slice(3, 4), 16);
-                    }
-                    else {
-                        this.color.r = parseInt(hex.slice(1, 3), 16);
-                        this.color.g = parseInt(hex.slice(3, 5), 16);
-                        this.color.b = parseInt(hex.slice(5, 7), 16);
-                    }
-
-                    this.color.calcHSV();
-
-                    console.log('set from hex', this.color);
-                    this.$emit('updateColor', this.initColor, this.color);
-                }
-                else {
-                    // Reset color so that hex is recomputed.
-                    this.color = new Color(this.initColor.name, this.initColor.r, this.initColor.g, this.initColor.b);
-                }
-            }
+        hex() {
+            return this.color.hex();
         }
     }
 };

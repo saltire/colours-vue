@@ -11,7 +11,7 @@
             <h1 class='control'></h1>
         </header>
         <ul v-sortable='{handle: ".handle", onSort}'>
-            <color-row v-for='color in colors' :key='`${color.name}-${color.hex()}`' :initColor='color' v-on:updateBackground='updateBackground' v-on:updateColor='updateColor' v-on:remove='remove'></color-row>
+            <color-row v-for='color in colors' :key='`${color.name}-${color.hex()}`' :color='color' @updateBackground='updateBackground' @updateColor='updateColor' @remove='remove'></color-row>
         </ul>
     </main>
 </template>
