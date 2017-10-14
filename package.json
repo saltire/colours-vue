@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "postinstall": "gulp build",
+    "publish": "git subtree push --prefix dist origin gh-pages",
     "start": "gulp serve"
   },
   "devDependencies": {
