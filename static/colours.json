@@ -73,104 +73,42 @@
     "name": "light warm",
     "type": "hsv",
     "h": 60,
-    "s": 10,
+    "s": 15,
     "v": 95
   },
   {
     "name": "mid warm",
     "type": "hsv",
-    "h": 60,
-    "s": 10,
+    "h": 72,
+    "s": 13,
     "v": 75
   },
   {
     "name": "dark warm",
     "type": "hsv",
-    "h": 60,
-    "s": 10,
+    "h": 84,
+    "s": 11,
     "v": 55
   },
   {
     "name": "penumbra warm",
     "type": "hsv",
-    "h": 60,
-    "s": 10,
+    "h": 96,
+    "s": 9,
     "v": 35
   },
   {
     "name": "umbra warm",
     "type": "hsv",
-    "h": 60,
-    "s": 10,
+    "h": 108,
+    "s": 7,
     "v": 25
   },
   {
-    "name": "light cool",
+    "name": "black warm",
     "type": "hsv",
-    "h": 180,
-    "s": 10,
-    "v": 95
-  },
-  {
-    "name": "mid cool",
-    "type": "hsv",
-    "h": 180,
-    "s": 10,
-    "v": 75
-  },
-  {
-    "name": "dark cool",
-    "type": "hsv",
-    "h": 180,
-    "s": 10,
-    "v": 55
-  },
-  {
-    "name": "penumbra cool",
-    "type": "hsv",
-    "h": 180,
-    "s": 10,
-    "v": 35
-  },
-  {
-    "name": "umbra cool",
-    "type": "hsv",
-    "h": 180,
-    "s": 10,
-    "v": 25
-  },
-  {
-    "name": "light pink",
-    "type": "hsv",
-    "h": 300,
-    "s": 10,
-    "v": 95
-  },
-  {
-    "name": "mid pink",
-    "type": "hsv",
-    "h": 300,
-    "s": 10,
-    "v": 75
-  },
-  {
-    "type": "hsv",
-    "h": 300,
-    "s": 10,
-    "v": 55
-  },
-  {
-    "name": "penumbra pink",
-    "type": "hsv",
-    "h": 300,
-    "s": 10,
-    "v": 35
-  },
-  {
-    "name": "umbra pink",
-    "type": "hsv",
-    "h": 300,
-    "s": 10,
-    "v": 25
+    "h": 120,
+    "s": 5,
+    "v": 15
   }
 ]

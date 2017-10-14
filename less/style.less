@@ -5,13 +5,20 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   background: #f8f8f8;
   color: #333;
   font-family: sans-serif;
 
   > header {
+    flex-shrink: 0;
     border-bottom: 1px solid #e7e7e7;
   }
 }
@@ -24,7 +31,8 @@ h1 {
 }
 
 main {
-  padding-top: 20px;
+  flex-grow: 1;
+  padding: 20px 0;
   font-size: 0;
   text-align: center;
 
