@@ -11,7 +11,9 @@
             <h1 class='control'></h1>
         </header>
         <ul v-sortable='{handle: ".handle", onSort}'>
-            <color-row v-for='color in colors' :key='`${color.name}-${color.hex()}`' :initColor='color' v-on:updateBackground='updateBackground' v-on:updateColor='updateColor' v-on:remove='remove'></color-row>
+            <color-row v-for='color in colors' :key='color.id' :color='color'
+                v-on:updateBackground='updateBackground' v-on:updateColor='updateColor'
+                v-on:remove='remove'></color-row>
         </ul>
     </main>
 </template>
@@ -23,7 +25,7 @@ import ColorRow from './colorRow.vue';
 export default {
     data() {
         return {
-            background: new Color('white', 255, 255, 255),
+            background: new Color('white', 'rgb', 255, 255, 255),
             colors: []
         };
     },
@@ -38,8 +40,11 @@ export default {
     created() {
         this.$http.get('./colours.json').then(
             resp => {
-                this.colors = resp.body
-                    .map(color => new Color(color.name, color.r, color.g, color.b));
+                this.colors = resp.body.map(c => {
+                    const type = c.type || 'rgb';
+                    const channels = type === 'rgb' ? [c.r, c.g, c.b] : [c.h, c.s, c.v];
+                    return new Color(c.name, type, ...channels);
+                });
             },
             resp => console.log('error', resp));
     },
