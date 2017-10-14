@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import Color from '../js/color';
 import ColorRow from './colorRow.vue';
 
@@ -38,15 +40,15 @@ export default {
         }
     },
     created() {
-        this.$http.get('./colours.json').then(
-            resp => {
-                this.colors = resp.body.map(c => {
+        axios.get('./colours.json')
+            .then(resp => {
+                this.colors = resp.data.map(c => {
                     const type = c.type || 'rgb';
                     const channels = type === 'rgb' ? [c.r, c.g, c.b] : [c.h, c.s, c.v];
                     return new Color(c.name, type, ...channels);
                 });
-            },
-            resp => console.log('error', resp));
+            })
+            .catch(console.error);
     },
     methods: {
         updateBackground(color) {

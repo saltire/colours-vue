@@ -1,11 +1,8 @@
 import Sortable from 'sortablejs';
 import Vue from 'vue';
-import VueResource from 'vue-resource';
 
 import App from '../vue/app.vue';
 
-
-Vue.use(VueResource);
 
 Vue.directive('sortable', {
     inserted(el, binding) {
