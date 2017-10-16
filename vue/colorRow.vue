@@ -3,7 +3,7 @@
         <div class='control'><a class='handle' title='Move up/down'>░</a></div>
         <div class='color'><button :title='`Set background to ${color.name}`' v-on:click='onClickColor' :style='{ background: color.format() }'></button></div>
         <div class='name'><input type='text' maxlength='50' v-model.trim='name' v-on:change='setName'></div>
-        <div class='hex'><input type='text' maxlength='7' v-model.lazy='hex'></div>
+        <div class='hex'><input type='text' maxlength='7' v-model.lazy='hex' v-on:change='setHex'></div>
         <div class='numbers'>
             <div class='number'><input type='text' maxlength='3' v-model.lazy.number='r' data-range='255' v-on:change='setFromRGB'></div>
             <div class='number'><input type='text' maxlength='3' v-model.lazy.number='g' data-range='255' v-on:change='setFromRGB'></div>
