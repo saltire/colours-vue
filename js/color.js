@@ -30,7 +30,7 @@ export default class Color {
   hex() {
     const num = (this.r * 0x10000) + (this.g * 0x100) + this.b;
     const str = num.toString(16);
-    return '#' + '000000'.slice(str.length) + str;
+    return `#${'000000'.slice(str.length)}${str}`;
   }
 
   setHex(str) {
@@ -38,7 +38,7 @@ export default class Color {
       throw new Error('Invalid hex code.');
     }
 
-    const hex = '#' + str.replace('#', '');
+    const hex = `#${str.replace('#', '')}`;
 
     if (hex.length === 4) {
       return this.setRGB(
@@ -47,13 +47,12 @@ export default class Color {
         parseInt(hex.slice(3, 4) + hex.slice(3, 4), 16),
       );
     }
-    else {
-      return this.setRGB(
-        parseInt(hex.slice(1, 3), 16),
-        parseInt(hex.slice(3, 5), 16),
-        parseInt(hex.slice(5, 7), 16),
-      );
-    }
+
+    return this.setRGB(
+      parseInt(hex.slice(1, 3), 16),
+      parseInt(hex.slice(3, 5), 16),
+      parseInt(hex.slice(5, 7), 16),
+    );
   }
 
   setRGB(r, g, b) {
@@ -87,8 +86,8 @@ export default class Color {
       const i = Math.floor(h);
       const data = [
         v * (1 - s),
-        v * (1 - s * (h - i)),
-        v * (1 - s * (1 - (h - i)))
+        v * (1 - (s * (h - i))),
+        v * (1 - (s * (1 - (h - i)))),
       ];
 
       if (i === 0) {

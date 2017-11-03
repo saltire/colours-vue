@@ -6,11 +6,11 @@ import App from '../vue/app.vue';
 
 Vue.directive('sortable', {
   inserted(el, binding) {
-    new Sortable(el, binding.value || {});
-  }
+    return new Sortable(el, binding.value || {});
+  },
 });
 
-const app = new Vue({
+export default new Vue({
   el: '#colors',
-  render: createElement => createElement(App)
+  render: createElement => createElement(App),
 });

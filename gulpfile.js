@@ -1,5 +1,3 @@
-'use strict';
-
 const babelify = require('babelify');
 const browserify = require('browserify');
 const gulp = require('gulp');
@@ -17,7 +15,7 @@ gulp.task('browserify', () => {
     .transform(vueify)
     .transform(babelify)
     .bundle()
-    .on('error', (err) => console.log('Error parsing with Browserify:', err.message))
+    .on('error', err => console.log('Error parsing with Browserify:', err.message))
     .pipe(source('script.js'))
     .pipe(streamify(uglify()))
     .pipe(gulp.dest('dist'));
@@ -26,7 +24,7 @@ gulp.task('browserify', () => {
 gulp.task('less', () => {
   gulp.src('less/*.less')
     .pipe(less())
-    .on('error', (err) => console.log('Error parsing LESS:', err.message))
+    .on('error', err => console.log('Error parsing LESS:', err.message))
     .pipe(gulp.dest('dist'));
 });
 
@@ -38,7 +36,7 @@ gulp.task('static', () => {
 gulp.task('serve', () => {
   connect.server({
     root: 'dist',
-    port: process.env.PORT || 5000
+    port: process.env.PORT || 5000,
   });
 });
 
